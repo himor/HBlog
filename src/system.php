@@ -1,12 +1,18 @@
 <?php
 
 class System {
+	
+	public $users = "users";
+	public $comments = "comment";
+	public $posts = "post";
+	public $tags = "tags";
+	
 	private $db 	= 'blog';
 	private $host 	= 'localhost';
 	private $user	= 'root';
 	private $pasw	= 'mysql';
 	
-	private $link 	= null;
+		private $link 	= null;
 	private $last_query = '';
 	
 	public function connect($flag = 0) {
@@ -39,11 +45,11 @@ class System {
 		//sets up SESSION
 		$username = $this->clear($username);
 		$password = $this->clear($password);
-		$query = "SELECT COUNT(`uid`) FROM `users` WHERE `username` = '$username' AND `password` = '$password' ;";
+		$query = "SELECT COUNT(`uid`) FROM `".$this->users."` WHERE `username` = '$username' AND `password` = '$password' ;";
 		$result = $this->query($query);
 		$result = mysql_fetch_row($result);
 		if ($result[0] == 0) return false;
-		$query = "SELECT * FROM `users` WHERE `username` = '$username' AND `password` = '$password' ;";
+		$query = "SELECT * FROM `".$this->users."` WHERE `username` = '$username' AND `password` = '$password' ;";
 		$result = $this->query($query);
 		$result = mysql_fetch_array($result);
 		$_SESSION['name'] = $result['name'];
@@ -56,7 +62,7 @@ class System {
 	}
 	
 	public function profile($user_id) {
-		$query = "SELECT * FROM `users` WHERE `uid` = '$user_id'; ";
+		$query = "SELECT * FROM `".$this->users."` WHERE `uid` = '$user_id'; ";
 		$result = $this->query($query);
 		return $result;
 	}
@@ -89,7 +95,7 @@ class System {
 	
 	/* function checks if user exists */
 	public function userexist($email) {
-		$query = "SELECT COUNT(`uid`) FROM `users` WHERE `email` = '".$this->clear($email)."';";
+		$query = "SELECT COUNT(`uid`) FROM `".$this->users."` WHERE `email` = '".$this->clear($email)."';";
 		$result = $this->query($query);
 		if (!$result) return 0;
 		$result = mysql_fetch_row($result);
@@ -98,7 +104,7 @@ class System {
 	
 	/* function checks user password exists */
 	public function userByPassword($user_id, $password) {
-		$query = "SELECT COUNT(`uid`) FROM `users` WHERE `uid` = '$user_id' AND `password` = '$password' ;";
+		$query = "SELECT COUNT(`uid`) FROM `".$this->users."` WHERE `uid` = '$user_id' AND `password` = '$password' ;";
 		$result = $this->query($query);
 		if (!$result) return 0;
 		$result = mysql_fetch_row($result);
@@ -107,7 +113,7 @@ class System {
 	
 	public function register($username, $password, $name, $email) {
 		if (!$this->userexist($email)) {
-			$query = "INSERT INTO `users` (`username`, `password`, `name`, `email`, `role`, `registered`, `reg_token`) VALUES (";
+			$query = "INSERT INTO `".$this->users."` (`username`, `password`, `name`, `email`, `role`, `registered`, `reg_token`) VALUES (";
 			$token = $this->genRandomString(16);
 			$time = time();
 			$query .= "'".$this->clear($username)."','".$this->clear($password)."','".$this->clear($name)."','".$this->clear($email)."', ";
@@ -118,7 +124,7 @@ class System {
 	}
 	
 	public function update($user_id, $username, $password, $name, $email) {
-			$query = "UPDATE `users` SET `username` = '$username', `password` = '$password', `name` = '$name', `email` = '$email' WHERE `uid` = '$user_id'; ";
+			$query = "UPDATE `".$this->users."` SET `username` = '$username', `password` = '$password', `name` = '$name', `email` = '$email' WHERE `uid` = '$user_id'; ";
 			$this -> query($query);
 	}	
 	
@@ -134,12 +140,9 @@ class System {
 	/* function changes the role of the user */
 	/* role = 1 is regular users, role = 0 is admin*/
 	public function setRole($user_id, $role) {
-		$query = "UPDATE `users` SET `role` = $role WHERE `uid` = $user_id;";
+		$query = "UPDATE `".$this->users."` SET `role` = $role WHERE `uid` = $user_id;";
 		$this -> query($query);
 	}
 }
-
-
-
 
 ?>

@@ -47,11 +47,26 @@
 ?>
 	<div class="first" style="min-height:700px;">
     <h2><?php echo $r['caption']?></h2>
-    <h4><?php echo date("j F Y, H:i",$r['time']);?> <a href="#comments"><?php $cmt = $post->countComments($r['id']); echo $cmt;?> комментари<?php if ($cmt%10==1) echo "й"; elseif($cmt%10>1 && $cmt%10<5) echo "я"; else echo "ев";?></a></h4>
+    <h4><span class="dateblock"><?php echo date("j F Y, H:i",$r['time']);?></span><a href="#comments"><?php $cmt = $post->countComments($r['id']); echo $cmt;?> комментари<?php if ($cmt%10==1) echo "й"; elseif($cmt%10>1 && $cmt%10<5) echo "я"; else echo "ев";?></a></h4>
+    <h4 class="tagblock">
+    <?php if ($r['tag']) :
+		$tags = explode(',', $r['tag']);
+		$first = true;
+		foreach($tags as $t) {
+			if (!$first) echo ', ';
+			echo "<a href=\"bytag.php?search=$t\">#$t</a>";
+			$first = false;
+		}
+		endif;?>
+    </h4>
     <p></p>
-	<div class="content_big">
+	
+    
+    <div class="content_big">
     <?php echo nl2br($r['text']);?>
     </div>
+    
+    
     <a name="comments"></a>
     <div id="comments">
     <div id="c-top"><span>Комментарии</span></div>
@@ -60,6 +75,7 @@
         	$com = $post->allComments($id);
 			while($r = mysql_fetch_array($com)){
 				echo "<div>";
+				echo "<a href=\"http://www.gravatar.com/\">" . gravatar($r['email']) . "</a>";
 				echo "<span>".$r['author']."<span class=\"date\">".date("j F Y, H:i",$r['time'])." GMT</span></span><br>";
 				echo "<p>".nl2br($r['comment'])."</p>";
 				echo "</div>";

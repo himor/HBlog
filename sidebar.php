@@ -8,6 +8,7 @@
 	$set = $p->tagCloud();
 	$result = '';
 	$color = 1;
+	if ($set)
 	foreach($set as $s) {
 		$color = ($color ? 0 : 1);
 		if ($s['counter']>20) $result .= '<a class="tag_5 color'.$color.'" href="bytag.php?search='.$s['tag'].'">'.$s['tag'].'</a> ';
@@ -34,20 +35,20 @@
 </div><!-- sidebar -->
   
   <script>
-
-	$.ajax({
-		url: "picgenerator.php",
-		cache: false,
-		success: function(html){	
-			$("#picasa").html(html);	
-		},
-	});
 	
 	$.ajax({
 		url: "last_comments.php",
 		cache: false,
 		success: function(html){	
 			$("#last_comments").html(html);	
+		},
+	});
+
+	$.ajax({
+		url: "picgenerator.php",
+		cache: false,
+		success: function(html){	
+			$("#picasa").html(html);	
 		},
 	});
 

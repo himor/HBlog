@@ -43,6 +43,7 @@
 			echo "<a href=\"bytag.php?search=$t\">#$t</a>";
 			$first = false;
 		}
+		echo "</p>";
 		endif;?>
     </div>
     <div class="clear-both"></div>

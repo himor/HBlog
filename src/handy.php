@@ -58,4 +58,29 @@ function shorted($str, $length) {
 	return $result.'...';
 }
 
+function gravatar($email, $size = 50) {
+	$usersEmail = $email;
+	$defaultImage = "img/transparent.png";
+	$avatarSize = $size;
+	$avatarRating = "G";
+	$avatarBorder = null;
+	$gravatarURL = "http://www.gravatar.com/avatar.php?gravatar_id=%s
+	&default=%s&size=%s&border=%s&rating=%s";
+
+$avatarURL = sprintf
+(
+	$gravatarURL, 
+	md5($usersEmail), 
+	$defaultImage,
+	$avatarSize,
+	$avatarBorder,
+	$avatarRating
+);
+
+return "<img class=\"gravatar\" src=\"" . 
+	$avatarURL . "\" width=\"" . 
+	$avatarSize . "\" height=\"" . 
+	$avatarSize . "\" />";
+}
+
 ?>

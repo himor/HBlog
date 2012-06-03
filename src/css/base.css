@@ -91,6 +91,17 @@ h1, h2, h3, h6 {color:#310062;font-family:Georgia, DejaVu Serif, "Times New Roma
 .first h4 a{margin-left:20px;text-decoration:none;color:#310062;}
 .first h4 a:hover{border-bottom:1px #310062 dotted;}
 
+.first .dateblock {display:inline-block; width:150px;}
+.first .tagblock {margin-left:150px;}
+.first .dateblock + a,
+.first .tagblock a
+ {margin-left:0px;  border-left:1px #310062 dotted; border-bottom:1px #310062 dotted; padding:0px 5px;}
+
+.first .dateblock + a:hover,
+.first .tagblock a:hover
+ {color:#fff; background-color: #310062;}
+
+
 .second h3{margin:0px;padding:10px 15px; border-bottom:1px #310062 dotted;}
 .second h3 a{color:#310062; text-decoration:none;}
 .second h3 a:hover{color:#999;}
@@ -119,6 +130,8 @@ div#comments div#c-mid div {padding:10px 0px;}
 div#comments div#c-mid div span { font-style:italic; font-weight:bold; display:inline-block;}
 div#comments div#c-mid div span.date {margin-left:20px;font-weight:normal;font-size:.8em;color:#666;}
 div#comments div#c-mid div p {padding:0px 20px;color:#000;}
+
+.gravatar {float:left; margin: 0px 10px 10px 0px;}
 
 /* tag cloud */
 a.tag_5,
@@ -149,7 +162,7 @@ a.tag_1 {font-size:0.7em; line-height:12px;}
 #sidebar a:hover {text-decoration:none;}
 #tagCloud {padding:20px 10px;}
 
-.last_cmt {padding:10px 15px; font-size:.8em; color:#666;}
+.last_cmt {padding:10px 15px 10px 10px; font-size:.8em; color:#666;}
 .last_cmt .name {display:inline-block; color: #310062; font-size:1.1em; font-weight:bold;}
 
 .last_cmt .for {display:block; color: #787878; font-size:.9em; font-style:italic;  font-weight:bold; text-align:right;}
