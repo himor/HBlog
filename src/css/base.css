@@ -148,11 +148,11 @@ a.tag_3:hover,
 a.tag_2:hover, 
 a.tag_1:hover {color:#fff !important; background-color:#310062;}
 
-a.tag_5 {font-size:1.3em; line-height:12px;}
-a.tag_4 {font-size:1.15em; line-height:12px;}
-a.tag_3 {font-size:1.0em; line-height:12px;}
-a.tag_2 {font-size:0.85em; line-height:12px;}
-a.tag_1 {font-size:0.7em; line-height:12px;}
+a.tag_5 {font-size:1.3em; line-height:13px;}
+a.tag_4 {font-size:1.15em; line-height:13px;}
+a.tag_3 {font-size:1.0em; line-height:13px;}
+a.tag_2 {font-size:0.85em; line-height:13px;}
+a.tag_1 {font-size:0.75em; line-height:13px;}
 
 /* sidebar */
 

@@ -25,8 +25,8 @@
 	<a href="post.php?id=<?php echo $r['id'];?>">
     <?php
 	$img = extractImage($r['text']);
-	if ($img  && @imagecreatefromjpeg($img)) {
-		echo "<img src=\"src/image.php?im=$img\" class=\"postimg\" />";
+	if ($img) {
+		echo "<img src=\"" . $cachePath . md5($img) . '.jpg' . "\" class=\"postimg\" />";
 		$length = 200;
 	} else {
 		$length = 500;
@@ -41,7 +41,7 @@
 		$first = true;
 		foreach($tags as $t) {
 			if (!$first) echo ', ';
-			echo "<a href=\"bytag.php?search=$t\">#$t</a>";
+			echo "<a href=\"bytag.php?search=$t\">#".trim($t)."</a>";
 			$first = false;
 		}
 		echo "</p>";

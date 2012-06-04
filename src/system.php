@@ -6,13 +6,13 @@ class System {
 	public $comments = "comment";
 	public $posts = "post";
 	public $tags = "tags";
-	
+
 	private $db 	= 'blog';
 	private $host 	= 'localhost';
 	private $user	= 'root';
 	private $pasw	= 'mysql';
 	
-		private $link 	= null;
+	private $link 	= null;
 	private $last_query = '';
 	
 	public function connect($flag = 0) {
