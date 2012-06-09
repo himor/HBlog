@@ -79,6 +79,8 @@ body { background-color:#ddd; margin:0px; padding:0px; font-family:"Trebuchet MS
 
 h1, h2, h3, h6 {color:#310062;font-family:Georgia, DejaVu Serif, "Times New Roman", Times, serif;}
 
+.first,
+.second { overflow:hidden;}
 .first h2{margin:0px;padding:10px 15px; border-bottom:1px #310062 dotted;}
 .first h3{margin:0px;padding:10px 15px; border-bottom:1px #310062 dotted;}
 .first h3 a{color:#310062; text-decoration:none;}

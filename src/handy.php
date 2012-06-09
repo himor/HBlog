@@ -64,7 +64,7 @@ function buildPicture($s) {
 	$new_size_y = 140;
 	$image_p = imagecreatetruecolor($new_size_x,$new_size_y);
 	imagecopyresampled($image_p,$image,0,0,0,0,$new_size_x,$new_size_y,$szx,$szy);
-	imagejpeg($image_p , $cachePath . md5($s) . '.jpg' , 100);	
+	imagejpeg($image_p , $cachePath . md5($s) . '.jpg' , 90);	
 }
 
 

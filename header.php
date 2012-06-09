@@ -10,6 +10,10 @@
 	// find out which page requested header;
 	$self = explode('/',$_SERVER['PHP_SELF']);
 	$self = $self[count($self)-1];
+	if ($self == 'post.php') {
+		$self_id = $_GET['id'];
+	}
+
 	
 ?>
 
@@ -83,7 +87,7 @@
 		$result = $post->listPages();
 		while ($r = mysql_fetch_array($result)) {
 			echo "<li>";
-			echo "<a href=\"post.php?id=".$r['id']."\">".$r['caption']."</a>";
+			echo "<a href=\"post.php?id=".$r['id']."\" " . (isset($self_id) ? ($self_id==$r['id']?"class='active'":"") : "") . ">".$r['caption']."</a>";
 			echo "</li>";
 		}
 	?></ul></td></tr></table>

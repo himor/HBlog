@@ -53,7 +53,6 @@
 		$tags = explode(',', $r['tag']);
 		$first = true;
 		foreach($tags as $t) {
-			if (!$first) echo ', ';
 			echo "<a href=\"bytag.php?search=$t\">#".trim($t)."</a>";
 			$first = false;
 		}
