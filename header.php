@@ -41,7 +41,7 @@
             });
 	});
 </script>
-<title>himorblog.com</title>
+<title>Blog | himorblog.com</title>
 </head>
 <body>
 
@@ -79,10 +79,10 @@
 </div><!-- login bar -->
 
 <div id="nav">
-	<a href="index.php"><img src="img/logo.png" border='0' alt="Logo" /></a>
+	<a href="http://www.himorblog.com"><img src="img/logo.png" border='0' alt="Logo" /></a>
     <div id="insert">
 <table cellpadding="0" cellspacing="0"><tr><td><div class="search">Search: <input type="text" id="searchText" /></div></td></tr>
-<tr><td style="vertical-align:bottom;"><ul class="menu"><li><a href="index.php" class="<?php echo(($self=='index.php')?'active':'');?>">Главная</a></li><?php
+<tr><td style="vertical-align:bottom;"><ul class="menu"><li><a href="index.php" class="<?php echo(($self=='index.php')?'active':'');?>">Главная</a></li><li><a href="/robot/?language=ru">Работы</a></li><?php
 		$post = new Post();
 		$result = $post->listPages();
 		while ($r = mysql_fetch_array($result)) {

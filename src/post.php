@@ -296,6 +296,9 @@ class Post {
 	}
 	
 	public function tagCloud() {
+		function cmp($a, $b) { 
+			return (($a['counter'] < $b['counter']) ? 1 : -1 );
+		}
 		$this->sys -> connect();
 		$query = "SELECT * FROM `".$this->tags_table."` WHERE TRUE;";
 		$result = $this->sys->query($query);
@@ -312,9 +315,13 @@ class Post {
 		foreach($set as $s)
 			$result[] = array('tag' => $s['tag'],
 				'counter' => $s['counter'] / $total * 100
-			);			
+			);
+		usort($result, "cmp");	
 		return (count($result) ? $result : null);
 	}
+	
+	
+	
 	
 	
 	//////////////////////////////////////////////////////////////////
