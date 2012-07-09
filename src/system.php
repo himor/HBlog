@@ -143,6 +143,17 @@ class System {
 		$query = "UPDATE `".$this->users."` SET `role` = $role WHERE `uid` = $user_id;";
 		$this -> query($query);
 	}
+	
+	/*	Function returns ID of admin user
+	*/
+	public function getAdmin() {
+		$query = "SELECT `uid` FROM `".$this->users."` WHERE `role` = 0 LIMIT 1;";
+		$result = $this->query($query);
+		if (!$result) return 0;
+		$result = mysql_fetch_row($result);
+		return $result[0];
+	}
+		
 }
 
 ?>

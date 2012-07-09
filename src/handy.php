@@ -70,7 +70,7 @@ function buildPicture($s) {
 
 
 function cutForFirst($str){
-	$str = strip_tags($str, '<p><a><b><i><strong><em>');
+	$str = strip_tags($str, '<p><a><b><i><strong><em><s>');
 	$ar = explode(". ",$str);
 	$str = '';
 	$i = 0;
@@ -80,7 +80,7 @@ function cutForFirst($str){
 }
 
 function cutForSecond($str, $length = 200){
-	$str = strip_tags($str, '<p><a><b><i><strong><em>');
+	$str = strip_tags($str, '<p><a><b><i><strong><em><s>');
 	$ar = explode(". ",$str);
 	$str = '';
 	$i = 0;

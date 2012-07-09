@@ -219,6 +219,33 @@ class Post {
 		return $result;		
 	}
 	
+	/*
+	* Returns posts with max number of comments
+	*/
+	public function mostComments($number = 5) {
+		$query = "SELECT COUNT(cid) as mx, post_id FROM " . $this->comment_table .
+			" GROUP BY post_id ORDER BY mx DESC LIMIT " . $number;		
+		$this->sys -> connect();
+		$result = $this->sys->query($query);
+		$this->sys -> close();
+		$ar = ' ('; $first = true;
+		while ($r = mysql_fetch_array($result)) {
+			if (!$first) $ar .= ','; else $first = false;
+			$ar .= $r[1];
+		}
+		$ar .= ')';
+		$query = "SELECT " . $this->post_table . ".caption AS postName, " . $this->post_table . ".text AS postText, " . $this->post_table . ".id AS post_id, " .
+		$this->post_table . ".time " .
+		" FROM " . $this->comment_table . ", " . $this->post_table.
+		" WHERE " . $this->comment_table . ".post_id = " . $this->post_table . ".id " . 
+		" AND " . $this->post_table . ".id IN" . $ar .
+		" GROUP BY " . $this->post_table . ".id". " ORDER BY time DESC LIMIT $number;";
+		$this->sys -> connect();
+		$result = $this->sys->query($query);
+		$this->sys -> close();
+		return $result;		
+	}
+	
 	public function addComment($post_id, $author=null, $email=null, $text=null, $user_id=null) {
 		$this->sys ->connect();  
 		if ($user_id) {
@@ -238,6 +265,8 @@ class Post {
 		$query .= "($post_id,'$author','$email','$text',$time, '".(($user_id)?$user_id:0)."');";
 		$result = $this->sys->query($query);	
 		$this->sys -> close();
+		
+		
 	}
 	
 	public function deleteComment($id) {
@@ -320,7 +349,31 @@ class Post {
 		return (count($result) ? $result : null);
 	}
 	
-	
+	/*
+		Make a notification about new comment for post
+		target - id of the post
+		msg - id of the comment
+	*/
+	public function informAdmin($target, $msg) {
+		$type = 2; // comment for post
+		$time = time();
+		$this->sys -> connect();
+		$to = $this->sys->getAdmin();
+		$query = "INSERT INTO `notif` (`to`, `target`, `msg`, `type`, `time`, `read`) " .
+			"VALUES ($to, $target, $msg, $type, '$time', 0);";
+		$this->sys->query($query);
+		$this->sys->close();		
+	}	
+
+	public function informUser($to, $target, $msg) {
+		$type = 2; // comment for post
+		$time = time();
+		$query = "INSERT INTO `notif` (`to`, `target`, `msg`, `type`, `time`, `read`) " .
+			"VALUES ($to, $target, $msg, $type, '$time', 0);";
+		$this->sys -> connect();
+		$this->sys->query($query);
+		$this->sys->close();		
+	}	
 	
 	
 	

@@ -30,6 +30,8 @@
 	<h3>Комментарии</h3>
     <div id="last_comments"></div>
 
+	<h3>Резонанс</h3>
+    <div id="most_comments"></div>
 
     
 </div><!-- sidebar -->
@@ -52,4 +54,13 @@
 		},
 	});
 
+	$.ajax({
+		url: "most_comments.php",
+		cache: false,
+		success: function(html){	
+			$("#most_comments").html(html);	
+		},
+	});
+
   </script>
+  
