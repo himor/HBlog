@@ -67,7 +67,10 @@ function buildPicture($s) {
 	imagejpeg($image_p , $cachePath . md5($s) . '.jpg' , 90);	
 }
 
-
+// function removes spaces
+function clearPath ($str) {
+	return str_replace(' ','_',$str);
+}
 
 function cutForFirst($str){
 	$str = strip_tags($str, '<p><a><b><i><strong><em><s>');

@@ -73,6 +73,21 @@
     <span><a href="write.php">WRITE</a></span>
     <?php endif; ?>
     <span><a href="feed/"><img src="img/rss.png" width="12" height="12" style="position:relative;top:3px;" alt="rss" /></a></span>
+    <?php
+    if ( isset ($_SESSION['hblog']) && isset($userdata['userId']) ) {
+		$notif = new Notif();
+		$numb = $notif -> getNewNotifNumber($userdata['userId']);
+		if ($numb) {
+			echo '<span>&#8226;</span>';
+			echo '<a href="notif.php"><span style="margin-left:0px;">изменений</span>';
+			echo '<span class="red">' . $numb . '</span></a>';
+		} else {
+			echo '<span>&#8226;</span>';
+			echo '<a href="notif.php"><span style="margin-left:0px;">нет изменений</span>';
+		}
+	}	
+	?>
+    
     
     <div class="clear-both"></div>
 </div><!-- login bar -->

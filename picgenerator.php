@@ -69,6 +69,22 @@ if (isset($_SESSION['hblog'])) {
 			});
 }
 
+	function display(src) {
+		src = src.replace('http://www.himorblog.com','');
+		src = src.replace('www.himorblog.com','');
+		src = src.replace('http://himorblog.com','');
+		$("#mainimg").attr('src',src);
+		$("#mainlink").attr('href', 'javascript:closeMask();');	
+		$('#mask').fadeIn(300);
+		$('#field').fadeIn(300);
+		$("#comment-container").empty();
+		var src = src.replace(' ', '_');
+		$.post("commentContainer.php?str=1&img="+src, {}, function(data){
+			$("#comment-container").html(data);		
+			});
+}
+
+
 function nextImage(id) {
 	var next;
 	$("#mainimg").attr('src',images[id]);
@@ -85,12 +101,14 @@ function nextImage(id) {
 
 $(document).ready(function(){
 	$('#closeMask').click(function(){
-		$("#field").fadeOut(100);
-		$("#mask").fadeOut(100);
+		closeMask();
 		});
 	});
 
-	
+function closeMask() {
+	$("#field").fadeOut(100);
+	$("#mask").fadeOut(100)
+}
 $(document).keyup(function(e) {
   if (e.keyCode == 27) { 
   		$("#field").fadeOut(100);

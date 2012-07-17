@@ -37,7 +37,7 @@
 	?>    
     </a>
 	<div class="content">
-    <p><?php echo (($i==0)?cutForFirst($r['text']):cutForSecond($r['text'], $length));?></p>
+    <p><?php echo (($i==0)?cutForFirst($r['text']):cutForSecond($r['text'], $length));?> <a href="post.php?id=<?php echo $r['id'];?>"> дальше...</a></p>
     <?php if ($r['tag']) :
 	    echo "<p class=\"tagsList\"> ";
 		$tags = explode(',', $r['tag']);

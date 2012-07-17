@@ -57,20 +57,21 @@ class Picom {
 		$this->sys -> connect();
 		$to = $this->sys->getAdmin();
 		$query = "INSERT INTO `notif` (`to`, `target`, `msg`, `type`, `time`, `read`) " .
-			"VALUES ($to, $target, $msg, $type, '$time', 0);";
+			"VALUES ($to, '$target', $msg, $type, '$time', 0);";
 		$this->sys->query($query);
 		$this->sys->close();		
 	}
 	
-	public function informUser($to, $target, $msg) {
-		$type = 1; // comment for picture
+	public function informAdminImgToPost($target, $msg) {
+		$type = 3; // comment for picture in post
 		$time = time();
-		$query = "INSERT INTO `notif` (`to`, `target`, `msg`, `type`, `time`, `read`) " .
-			"VALUES ($to, $target, $msg, $type, '$time', 0);";
 		$this->sys -> connect();
+		$to = $this->sys->getAdmin();
+		$query = "INSERT INTO `notif` (`to`, `target`, `msg`, `type`, `time`, `read`) " .
+			"VALUES ($to, '$target', $msg, $type, '$time', 0);";
 		$this->sys->query($query);
 		$this->sys->close();		
-	}	
-
+	}
+	
 }
 ?>

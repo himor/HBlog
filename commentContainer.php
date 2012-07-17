@@ -10,15 +10,21 @@ if (isset($_SESSION['hblog'])) {
 
 if (isset($_POST['name'])) { // saving the comment
 	$picom = new Picom();
+	$isStr = $_POST['isStr'];
 	$id = $picom->postComment($_POST['img'], $_POST['name'], $_POST['email'], $_POST['text'], $_POST['uid']);	
 	if (isset($_SESSION['hblog']) && isset($userdata['role']) && $userdata['role'] == '0') {
-		// do nothing
-	} else
+		// do nothing if current user is actually admin
+	} else {
+		if ($isStr)
+			$picom->informAdminImgToPost($_POST['img'], $id);
+		else
 		$picom->informAdmin((int)$_POST['img'], $id);
-	if (isset($_SESSION['hblog']) && isset($userdata['role']) && $userdata['role'] != '0') {
-		$notif = new Notif();
-		$notif->updateRegister((int)$_POST['img'], 1, $userdata['userId']);
 	}
+	$notif = new Notif();
+	if (isset($_SESSION['hblog']) && isset($userdata['role']) && $userdata['role'] != '0') {
+		$notif->updateRegister($isStr ? $_POST['img'] : (int)$_POST['img'], $isStr ? 3 : 1, $userdata['userId']);
+	}
+	$notif->informUsers($isStr ? 3 : 1, $isStr ? $_POST['img'] : (int)$_POST['img'], $id, (isset($_SESSION['hblog']) && isset($userdata['userId']) ? $userdata['userId'] : null));
 	$return = array();
 	$return['id'] = $id;
 	$return['html'] = "<a href=\"http://www.gravatar.com/\">" . gravatar($_POST['email'], 30) . "</a>" .
@@ -30,19 +36,13 @@ if (isset($_POST['name'])) { // saving the comment
 if (isset($_GET['img']))
 	$img = $_GET['img'];
 	else return;
+	
+if (isset($_GET['str']))
+	$isStr = 1;
+	else $isStr = 0;
+	
 ?>
-<!--<span style="display:block;height:10px;"></span>
-<div id="comCont">
-<span>Имя:</span>
-<input name="author" id="ccname" type="text" value="<?php if (isset($userdata)) echo $userdata['name'];?>"/><br />
-<span>E-mail:</span>
-<input name="email" id="ccemail" type="text" value="<?php if (isset($userdata)) echo $userdata['email'];?>" /><br />
-<input name="user_id"  id="ccuid" type="hidden" value="<?php if (isset($userdata)) echo $userdata['userId']; ?>"/>
-<textarea name="comment"  id="cccomment" style="width:275px;height:80px;"></textarea><br />
-<button type="button" id="ccbutton" onclick="postComment();" style="margin-top:10px;float:right;">Сказать</button>
-<div class="clear-both"></div>
-</div>
--->
+
 <script>
 function postComment() {
 	if ($('#ccbutton').attr('disabled')) return;
@@ -52,7 +52,7 @@ function postComment() {
 	var text = $('#cccomment').val();
 	if (!name || !email || !text) return;
 	if (name == 'Имя' || email == 'E-mail' || text=='Пишите комментарий...') return;
-	$.post ("commentContainer.php", {img:'<?php echo $img;?>',name:name, email:email, uid:uid, text:text}, function(data){
+	$.post ("commentContainer.php", {img:'<?php echo $img;?>',name:name, email:email, uid:uid, text:text, isStr:<?php echo $isStr;?>}, function(data){
 		var thediv = '<div id="dv'+data.id+'" class="comContOne"></div>';
 		$('#holder').before(thediv);
 		$('#dv'+data.id).html(data.html);

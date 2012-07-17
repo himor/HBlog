@@ -35,7 +35,16 @@
 	$login = false;
 	
 	if ($author && $email && $comment && ($capcha == $capcha_must)) {
-		$post->addComment($id,$author,$email,$comment,$user_id);
+		$comment_id = $post->addComment($id,$author,$email,$comment,$user_id);
+		if (isset($_SESSION['hblog']) && isset($userdata['role']) && $userdata['role'] == '0') {
+			// do nothing if current user is actually admin
+		} else
+			$post->informAdmin($id, $comment_id);
+		$notif = new Notif();
+		if (isset($_SESSION['hblog']) && isset($userdata['role']) && $userdata['role'] != '0') {
+			$notif->updateRegister($id, 2, $userdata['userId']);
+		}
+		$notif->informUsers(2, $id, $comment_id, (isset($_SESSION['hblog']) && isset($userdata['userId']) ? $userdata['userId'] : null));
 		$capcha_must = null;$comment = '';
 	}
 	
@@ -134,19 +143,11 @@
 
 </div><!-- wrap -->
 <script type="text/javascript">
-	function align(a, b) {
-		var h1 = $('#div_'+a).height();
-		var h2 = $('#div_'+b).height();
-		var m = ((h1>h2)?parseInt(h1):parseInt(h2));
-		$('#div_'+a).height(m);
-		$('#div_'+b).height(m);
-	}
-	
 	$(document).ready(function() {
-		align(2,3);
-		align(4,5);
-		align(6,7);
-		align(8,9);
+		$('.content_big img').each(function() {
+			$(this).wrapAll("<a href=\"javascript:display('"+$(this).attr('src')+"');\">");
+		});
+			
 	});
 
 </script>

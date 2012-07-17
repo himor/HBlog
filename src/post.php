@@ -264,9 +264,11 @@ class Post {
 		$query = "INSERT INTO `".$this->comment_table."`(`post_id`,`author`,`email`,`comment`,`time`, `user_id`) VALUES ";
 		$query .= "($post_id,'$author','$email','$text',$time, '".(($user_id)?$user_id:0)."');";
 		$result = $this->sys->query($query);	
+		$query = "SELECT `cid` FROM `".$this->comment_table."` WHERE `time` = $time;";
+		$result = $this->sys->query($query);
+		$result = mysql_fetch_array($result);		
 		$this->sys -> close();
-		
-		
+		return $result['cid'];
 	}
 	
 	public function deleteComment($id) {
@@ -363,18 +365,7 @@ class Post {
 			"VALUES ($to, $target, $msg, $type, '$time', 0);";
 		$this->sys->query($query);
 		$this->sys->close();		
-	}	
-
-	public function informUser($to, $target, $msg) {
-		$type = 2; // comment for post
-		$time = time();
-		$query = "INSERT INTO `notif` (`to`, `target`, `msg`, `type`, `time`, `read`) " .
-			"VALUES ($to, $target, $msg, $type, '$time', 0);";
-		$this->sys -> connect();
-		$this->sys->query($query);
-		$this->sys->close();		
-	}	
-	
+	}
 	
 	
 	//////////////////////////////////////////////////////////////////
